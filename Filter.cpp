@@ -62,7 +62,15 @@ void Filter::apply_mean_filter(GrayscaleImage &image, int kernelSize)
 void Filter::apply_gaussian_smoothing(GrayscaleImage &image, int kernelSize, double sigma)
 {
     // TODO: Your code goes here.
+    int height = image.get_height();
+    int width = image.get_width();
+    int **img = image.get_data();
+
+    int padSize = kernelSize / 2;
     // 1. Create a Gaussian kernel based on the given sigma value.
+
+    std::vector<std::vector<double>> gaussianKernel(kernelSize, std::vector<double>(kernelSize));
+    double sum = 0.0;
     // 2. Normalize the kernel to ensure it sums to 1.
     // 3. For each pixel, compute the weighted sum using the kernel.
     // 4. Update the pixel values with the smoothed results.
