@@ -145,65 +145,29 @@ void Filter::apply_gaussian_smoothing(GrayscaleImage &image, int kernelSize, dou
 // Unsharp Masking Filter
 void Filter::apply_unsharp_mask(GrayscaleImage &image, int kernelSize, double amount)
 {
-    // Validate kernel size
-    if (kernelSize <= 0 || kernelSize % 2 == 0)
-    {
-        std::cerr << "Kernel size must be a positive odd integer." << std::endl;
-        return;
-    }
+
+    // TODO: Your code goes here.
+    GrayscaleImage blurredImage = image;
+    // 1. Blur the image using Gaussian smoothing, use the default sigma given in the header.
+    apply_gaussian_smoothing(blurredImage, kernelSize, 1.0);
 
     int height = image.get_height();
     int width = image.get_width();
-
-    // Validate image dimensions
-    if (height <= 0 || width <= 0)
-    {
-        std::cerr << "Image dimensions must be positive." << std::endl;
-        return;
-    }
-
-    // Step 1: Apply Gaussian smoothing to get the blurred image
-    GrayscaleImage blurredImage = image;                     // Create a copy of the original image
-    apply_gaussian_smoothing(blurredImage, kernelSize, 1.0); // Use sigma = 1.0
-
-    // Step 2: Calculate the difference image (edge image)
     int **originalData = image.get_data();
     int **blurredData = blurredImage.get_data();
-    int **sharpenedData = new int *[height]; // Allocate memory for the sharpened image
-
-    for (int i = 0; i < height; i++)
-    {
-        sharpenedData[i] = new int[width];
-    }
 
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
-            // Calculate the edge image
             int edgeValue = originalData[i][j] - blurredData[i][j];
-            // Enhance the edges
-            int sharpenedValue = static_cast<int>(originalData[i][j] + amount * edgeValue);
+            // 2. For each pixel, apply the unsharp mask formula: original + amount * (original - blurred).
+            int sharpenedValue = static_cast<int> (originalData[i][j] +(amount * edgeValue));
 
-            // Clamp values to [0, 255]
+            // 3. Clip values to ensure they are within a valid range [0-255].
             sharpenedValue = std::max(0, std::min(255, sharpenedValue));
-            sharpenedData[i][j] = sharpenedValue;
+
+            originalData[i][j] = sharpenedValue;
         }
     }
-
-    // Update the original image data with sharpened data
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            originalData[i][j] = sharpenedData[i][j];
-        }
-    }
-
-    // Free memory allocated for the sharpened image
-    for (int i = 0; i < height; i++)
-    {
-        delete[] sharpenedData[i];
-    }
-    delete[] sharpenedData;
 }
