@@ -85,6 +85,8 @@ GrayscaleImage::GrayscaleImage(int w, int h) : width(w), height(h)
 GrayscaleImage::GrayscaleImage(const GrayscaleImage &other)
 {
     // TODO: Your code goes here.
+    height = other.get_height();
+    width = other.get_width();
     // Copy constructor: dynamically allocate memory and
     data = new int *[height];
     for (int i = 0; i < height; i++)

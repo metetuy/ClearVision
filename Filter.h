@@ -2,9 +2,11 @@
 #define FILTER_H
 
 #include "GrayscaleImage.h"
+#include <vector>
 
 class Filter {
 public:
+    static std::vector<std::vector<double>> generate_gaussian_kernel(int kernelSize, double sigma);
     // Apply the Mean Filter
     static void apply_mean_filter(GrayscaleImage& image, int kernelSize = 3);
 
@@ -13,6 +15,7 @@ public:
 
     // Apply Unsharp Masking Filter
     static void apply_unsharp_mask(GrayscaleImage& image, int kernelSize = 3, double amount = 1.5);
+
 };
 
 #endif // FILTER_H
