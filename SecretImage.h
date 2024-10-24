@@ -19,6 +19,7 @@ private:
     int width, height;
 
 public:
+
     // Constructor: takes a GrayscaleImage and splits it into two triangular arrays
     SecretImage(const GrayscaleImage &image);
 
