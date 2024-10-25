@@ -129,7 +129,7 @@ void Filter::apply_gaussian_smoothing(GrayscaleImage &image, int kernelSize, dou
                     sum += paddedImageCopy[i + row][j + col] * gaussianKernel[row + padSize][col + padSize];
                 }
             }
-            // 3. Update each pixel with the computed mean.
+
             img[i - padSize][j - padSize] = static_cast<int>(sum);
         }
     }
@@ -147,8 +147,8 @@ void Filter::apply_unsharp_mask(GrayscaleImage &image, int kernelSize, double am
 {
 
     // TODO: Your code goes here.
-    GrayscaleImage blurredImage = image;
     // 1. Blur the image using Gaussian smoothing, use the default sigma given in the header.
+    GrayscaleImage blurredImage = image;
     apply_gaussian_smoothing(blurredImage, kernelSize, 1.0);
 
     int height = image.get_height();
@@ -162,10 +162,10 @@ void Filter::apply_unsharp_mask(GrayscaleImage &image, int kernelSize, double am
         {
             int edgeValue = originalData[i][j] - blurredData[i][j];
             // 2. For each pixel, apply the unsharp mask formula: original + amount * (original - blurred).
-            int sharpenedValue = static_cast<int> (originalData[i][j] +(amount * edgeValue));
+            int sharpenedValue = static_cast<int>(originalData[i][j] + (amount * edgeValue));
 
             // 3. Clip values to ensure they are within a valid range [0-255].
-            sharpenedValue = std::max(0, std::min(255, sharpenedValue));
+            sharpenedValue = (sharpenedValue < 0) ? 0 : (sharpenedValue > 255 ? 255 : sharpenedValue);
 
             originalData[i][j] = sharpenedValue;
         }
