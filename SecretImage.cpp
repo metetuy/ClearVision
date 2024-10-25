@@ -18,13 +18,13 @@ SecretImage::SecretImage(const GrayscaleImage &image)
     {
         for (int j = 0; j < width; j++)
         {
-            if (j < i)
+            if (j >= i)
             {
-                lower_triangular[i1++] = image.get_pixel(i, j);
+                upper_triangular[i2++] = image.get_pixel(i, j);
             }
             else
             {
-                upper_triangular[i2++] = image.get_pixel(i, j);
+                lower_triangular[i1++] = image.get_pixel(i, j);
             }
         }
     }
@@ -38,21 +38,15 @@ SecretImage::SecretImage(int w, int h, int *upper, int *lower)
     width = w;
     height = h;
     // You should simply copy the parameters to instance variables.
-    int upperSize = (height + 1) * height / 2;
-    int lowerSize = (height - 1) * height / 2;
+
+    int upperSize = ((width + 1) * width) / 2;
+    int lowerSize = ((width - 1) * width) / 2;
 
     upper_triangular = new int[upperSize];
     lower_triangular = new int[lowerSize];
 
-    for (int i = 0; i < upperSize; i++)
-    {
-        upper_triangular[i] = upper[i];
-    }
-
-    for (int i = 0; i < lowerSize; i++)
-    {
-        lower_triangular[i] = lower[i];
-    }
+    std::copy(upper, upper + upperSize, upper_triangular);
+    std::copy(lower, lower + lowerSize, lower_triangular);
 }
 
 // Destructor: free the arrays
@@ -69,21 +63,21 @@ SecretImage::~SecretImage()
 GrayscaleImage SecretImage::reconstruct() const
 {
     GrayscaleImage image(width, height);
-    int i1 = 0;
-    int i2 = 0;
+    int upperIndex = 0;
+    int lowerIndex = 0;
 
     // TODO: Your code goes here.
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
-            if (j < i)
+            if (j >= i)
             {
-                image.set_pixel(i, j, lower_triangular[i1++]);
+                image.set_pixel(i, j, upper_triangular[upperIndex++]);
             }
             else
             {
-                image.set_pixel(i, j, upper_triangular[i2++]);
+                image.set_pixel(i, j, lower_triangular[lowerIndex++]);
             }
         }
     }
@@ -103,22 +97,22 @@ void SecretImage::save_back(const GrayscaleImage &image)
     delete[] upper_triangular;
     delete[] lower_triangular;
 
-    upper_triangular = new int[(height + 1) * height / 2];
-    lower_triangular = new int[(height - 1) * height / 2];
+    upper_triangular = new int[((width + 1) * width) / 2];
+    lower_triangular = new int[((width - 1) * width) / 2];
 
-    int i1 = 0;
-    int i2 = 0;
+    int upperIndex = 0;
+    int lowerIndex = 0;
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
-            if (j < i)
+            if (j >= i)
             {
-                lower_triangular[i1++] = image.get_pixel(i, j);
+                upper_triangular[upperIndex++] = image.get_pixel(i, j);
             }
             else
             {
-                upper_triangular[i2++] = image.get_pixel(i, j);
+                lower_triangular[lowerIndex++] = image.get_pixel(i, j);
             }
         }
     }
@@ -136,7 +130,7 @@ void SecretImage::save_to_file(const std::string &filename)
     // 2. Write the upper_triangular array to the second line.
     // Ensure that the elements are space-separated.
     // If there are 15 elements, write them as: "element1 element2 ... element15"
-    int upperSize = width * (width + 1) / 2;
+    int upperSize = (width * (width + 1)) / 2;
     for (int i = 0; i < upperSize; i++)
     {
         file << upper_triangular[i];
@@ -150,7 +144,7 @@ void SecretImage::save_to_file(const std::string &filename)
 
     // 3. Write the lower_triangular array to the third line in a similar manner
     // as the second line.
-    int lowerSize = width * (width - 1) / 2;
+    int lowerSize = (width * (width - 1)) / 2;
     for (int i = 0; i < lowerSize; i++)
     {
         file << lower_triangular[i];
@@ -177,8 +171,8 @@ SecretImage SecretImage::load_from_file(const std::string &filename)
     file >> width >> height;
 
     // 2. Calculate the sizes of the upper and lower triangular arrays.
-    int upperSize = width * (width + 1) / 2;
-    int lowerSize = width * (width - 1) / 2;
+    int upperSize = (width * (width + 1)) / 2;
+    int lowerSize = (width * (width - 1)) / 2;
     // 3. Allocate memory for both arrays.
 
     int *upper_array = new int[upperSize];
