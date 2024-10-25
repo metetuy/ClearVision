@@ -71,10 +71,10 @@ GrayscaleImage::GrayscaleImage(int w, int h) : width(w), height(h)
     // Just dynamically allocate the memory for the new matrix.
     data = new int *[height];
 
-    for (int i = 0; i < h; i++)
+    for (int i = 0; i < height; i++)
     {
-        data[i] = new int[w];
-        for (int j = 0; j < w; j++)
+        data[i] = new int[width];
+        for (int j = 0; j < width; j++)
         {
             data[i][j] = 255;
         }
@@ -88,6 +88,7 @@ GrayscaleImage::GrayscaleImage(const GrayscaleImage &other)
     height = other.get_height();
     width = other.get_width();
     // Copy constructor: dynamically allocate memory and
+    // copy pixel values from another image.
     data = new int *[height];
     for (int i = 0; i < height; i++)
     {
@@ -104,13 +105,9 @@ GrayscaleImage::~GrayscaleImage()
 {
     // TODO: Your code goes here.
     // Destructor: deallocate memory for the matrix.
-    if (data != nullptr)
+    for (int i = 0; i < height; i++)
     {
-
-        for (int i = 0; i < height; i++)
-        {
-            delete[] data[i];
-        }
+        delete[] data[i];
     }
     delete[] data;
     data = nullptr;
@@ -162,7 +159,6 @@ GrayscaleImage GrayscaleImage::operator+(const GrayscaleImage &other) const
             }
         }
     }
-
     return result;
 }
 

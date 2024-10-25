@@ -7,6 +7,9 @@ SecretImage::SecretImage(const GrayscaleImage &image)
     height = image.get_height();
     width = image.get_width();
 
+    upper_triangular = nullptr;
+    lower_triangular = nullptr;
+
     // 1. Dynamically allocate the memory for the upper and lower triangular matrices.
     upper_triangular = new int[(height + 1) * height / 2];
     lower_triangular = new int[(height - 1) * height / 2];
@@ -35,9 +38,9 @@ SecretImage::SecretImage(int w, int h, int *upper, int *lower)
 {
     // TODO: Your code goes here.
     // Since file reading part should dynamically allocate upper and lower matrices.
+    // You should simply copy the parameters to instance variables.
     width = w;
     height = h;
-    // You should simply copy the parameters to instance variables.
 
     int upperSize = ((width + 1) * width) / 2;
     int lowerSize = ((width - 1) * width) / 2;
@@ -57,6 +60,8 @@ SecretImage::~SecretImage()
     // for the upper and lower triangular matrices.
     delete[] upper_triangular;
     delete[] lower_triangular;
+    upper_triangular = nullptr;
+    lower_triangular = nullptr;
 }
 
 // Reconstructs and returns the full image from upper and lower triangular matrices.
@@ -96,6 +101,9 @@ void SecretImage::save_back(const GrayscaleImage &image)
 
     delete[] upper_triangular;
     delete[] lower_triangular;
+
+    upper_triangular = nullptr;
+    lower_triangular = nullptr;
 
     upper_triangular = new int[((width + 1) * width) / 2];
     lower_triangular = new int[((width - 1) * width) / 2];
