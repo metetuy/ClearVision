@@ -46,7 +46,7 @@ std::string Crypto::decrypt_message(const std::vector<int> &LSB_array)
     // 1. Verify that the LSB array size is a multiple of 7, else throw an error.
     if (LSB_array.size() % 7 != 0)
     {
-        throw std::runtime_error("ERROR: LSB array size should be a multiple of 7.");
+        throw std::runtime_error("ERROR: LSB ARRAY SIZE SHOULD BE A MULTIPLE OF 7.");
     }
 
     // 2. Convert each group of 7 bits into an ASCII character.
@@ -56,7 +56,7 @@ std::string Crypto::decrypt_message(const std::vector<int> &LSB_array)
 
         for (int j = 0; j < 7; ++j)
         {
-            ascii_value = (ascii_value << 1) | LSB_array[i + j];
+            ascii_value = ascii_value * 2 + LSB_array[i + j];
         }
 
         // 3. Collect the characters to form the decrypted message.

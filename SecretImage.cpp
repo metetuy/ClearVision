@@ -41,15 +41,8 @@ SecretImage::SecretImage(int w, int h, int *upper, int *lower)
     // You should simply copy the parameters to instance variables.
     width = w;
     height = h;
-
-    int upperSize = ((width + 1) * width) / 2;
-    int lowerSize = ((width - 1) * width) / 2;
-
-    upper_triangular = new int[upperSize];
-    lower_triangular = new int[lowerSize];
-
-    std::copy(upper, upper + upperSize, upper_triangular);
-    std::copy(lower, lower + lowerSize, lower_triangular);
+    upper_triangular = upper;
+    lower_triangular = lower;
 }
 
 // Destructor: free the arrays
@@ -183,8 +176,8 @@ SecretImage SecretImage::load_from_file(const std::string &filename)
     int lowerSize = (width * (width - 1)) / 2;
     // 3. Allocate memory for both arrays.
 
-    int *upper_array = new int[upperSize];
-    int *lower_array = new int[lowerSize];
+    int * upper_array = new int[upperSize];
+    int * lower_array = new int[lowerSize];
     // 4. Read the upper_triangular array from the second line, space-separated.
     for (int i = 0; i < upperSize; i++)
     {
@@ -201,9 +194,6 @@ SecretImage SecretImage::load_from_file(const std::string &filename)
     //    width, height, and triangular arrays.
     file.close();
     SecretImage secret_image(width, height, upper_array, lower_array);
-
-    delete[] upper_array;
-    delete[] lower_array;
 
     return secret_image;
 }

@@ -48,6 +48,7 @@ GrayscaleImage::GrayscaleImage(int **inputData, int h, int w)
 {
     // TODO: Your code goes here.
     // Initialize the image with a pre-existing data matrix by copying the values.
+    // Don't forget to dynamically allocate memory for the matrix.
     data = new int *[h];
     for (int i = 0; i < h; i++)
     {
@@ -61,7 +62,6 @@ GrayscaleImage::GrayscaleImage(int **inputData, int h, int w)
             data[i][j] = inputData[i][j];
         }
     }
-    // Don't forget to dynamically allocate memory for the matrix.
 }
 
 // Constructor to create a blank image of given width and height
@@ -118,6 +118,7 @@ bool GrayscaleImage::operator==(const GrayscaleImage &other) const
 {
     // TODO: Your code goes here.
     // Check if two images have the same dimensions and pixel values.
+    // If they do, return true.
     if (get_height() == other.get_height() && get_width() == other.get_width())
     {
         for (int i = 0; i < height; i++)
@@ -134,7 +135,6 @@ bool GrayscaleImage::operator==(const GrayscaleImage &other) const
         return true;
     }
     return false;
-    // If they do, return true.
 }
 
 // Addition operator
