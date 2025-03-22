@@ -68,6 +68,4 @@ clearvision enc image.png "Hello, world!"
 clearvision dec image.png 13
 ```
 
-## License
-This project is licensed under the MIT License.
 
