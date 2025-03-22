@@ -3,7 +3,7 @@
 // Constructor: split image into upper and lower triangular arrays
 SecretImage::SecretImage(const GrayscaleImage &image)
 {
-    // TODO: Your code goes here.
+    // 
     height = image.get_height();
     width = image.get_width();
 
@@ -36,7 +36,7 @@ SecretImage::SecretImage(const GrayscaleImage &image)
 // Constructor: instantiate based on data read from file
 SecretImage::SecretImage(int w, int h, int *upper, int *lower)
 {
-    // TODO: Your code goes here.
+    // 
     // Since file reading part should dynamically allocate upper and lower matrices.
     // You should simply copy the parameters to instance variables.
     width = w;
@@ -48,7 +48,7 @@ SecretImage::SecretImage(int w, int h, int *upper, int *lower)
 // Destructor: free the arrays
 SecretImage::~SecretImage()
 {
-    // TODO: Your code goes here.
+    // 
     // Simply free the dynamically allocated memory
     // for the upper and lower triangular matrices.
     delete[] upper_triangular;
@@ -64,7 +64,7 @@ GrayscaleImage SecretImage::reconstruct() const
     int upperIndex = 0;
     int lowerIndex = 0;
 
-    // TODO: Your code goes here.
+    // 
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
@@ -86,7 +86,7 @@ GrayscaleImage SecretImage::reconstruct() const
 // Save the filtered image back to the triangular arrays
 void SecretImage::save_back(const GrayscaleImage &image)
 {
-    // TODO: Your code goes here.
+    // 
     // Update the lower and upper triangular matrices
     // based on the GrayscaleImage given as the parameter.
     height = image.get_height();
@@ -122,7 +122,7 @@ void SecretImage::save_back(const GrayscaleImage &image)
 // Save the upper and lower triangular arrays to a file
 void SecretImage::save_to_file(const std::string &filename)
 {
-    // TODO: Your code goes here.
+    // 
 
     std::ofstream file(filename);
     // 1. Write width and height on the first line, separated by a single space.
@@ -163,7 +163,7 @@ void SecretImage::save_to_file(const std::string &filename)
 // Static function to load a SecretImage from a file
 SecretImage SecretImage::load_from_file(const std::string &filename)
 {
-    // TODO: Your code goes here.
+    // 
     // 1. Open the file and read width and height from the first line, separated by a space.
     std::ifstream file(filename);
     int width;

@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "Filter.h"
 #include <iostream>
 #include <algorithm>
@@ -37,7 +38,7 @@ std::vector<std::vector<double>> Filter::generate_gaussian_kernel(int kernelSize
 // Mean Filter
 void Filter::apply_mean_filter(GrayscaleImage &image, int kernelSize)
 {
-    // TODO: Your code goes here.
+    // 
     // 1. Copy the original image for reference.
     int height = image.get_height();
     int width = image.get_width();
@@ -90,7 +91,7 @@ void Filter::apply_mean_filter(GrayscaleImage &image, int kernelSize)
 // Gaussian Smoothing Filter
 void Filter::apply_gaussian_smoothing(GrayscaleImage &image, int kernelSize, double sigma)
 {
-    // TODO: Your code goes here.
+    // 
     int height = image.get_height();
     int width = image.get_width();
     int **img = image.get_data();
@@ -146,7 +147,7 @@ void Filter::apply_gaussian_smoothing(GrayscaleImage &image, int kernelSize, dou
 void Filter::apply_unsharp_mask(GrayscaleImage &image, int kernelSize, double amount)
 {
 
-    // TODO: Your code goes here.
+    // 
     // 1. Blur the image using Gaussian smoothing, use the default sigma given in the header.
     GrayscaleImage blurredImage = image;
     apply_gaussian_smoothing(blurredImage, kernelSize, 1.0);

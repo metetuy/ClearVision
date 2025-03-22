@@ -21,7 +21,6 @@ GrayscaleImage::GrayscaleImage(const char *filename)
         exit(1);
     }
 
-    // TODO: Your code goes here.
     // Dynamically allocate memory for a 2D matrix based on the given dimensions.
     data = new int *[height];
 
@@ -46,7 +45,6 @@ GrayscaleImage::GrayscaleImage(const char *filename)
 // Constructor: initialize from a pre-existing data matrix
 GrayscaleImage::GrayscaleImage(int **inputData, int h, int w)
 {
-    // TODO: Your code goes here.
     // Initialize the image with a pre-existing data matrix by copying the values.
     // Don't forget to dynamically allocate memory for the matrix.
     data = new int *[h];
@@ -67,7 +65,6 @@ GrayscaleImage::GrayscaleImage(int **inputData, int h, int w)
 // Constructor to create a blank image of given width and height
 GrayscaleImage::GrayscaleImage(int w, int h) : width(w), height(h)
 {
-    // TODO: Your code goes here.
     // Just dynamically allocate the memory for the new matrix.
     data = new int *[height];
 
@@ -84,7 +81,6 @@ GrayscaleImage::GrayscaleImage(int w, int h) : width(w), height(h)
 // Copy constructor
 GrayscaleImage::GrayscaleImage(const GrayscaleImage &other)
 {
-    // TODO: Your code goes here.
     height = other.get_height();
     width = other.get_width();
     // Copy constructor: dynamically allocate memory and
@@ -103,7 +99,6 @@ GrayscaleImage::GrayscaleImage(const GrayscaleImage &other)
 // Destructor
 GrayscaleImage::~GrayscaleImage()
 {
-    // TODO: Your code goes here.
     // Destructor: deallocate memory for the matrix.
     for (int i = 0; i < height; i++)
     {
@@ -116,7 +111,6 @@ GrayscaleImage::~GrayscaleImage()
 // Equality operator
 bool GrayscaleImage::operator==(const GrayscaleImage &other) const
 {
-    // TODO: Your code goes here.
     // Check if two images have the same dimensions and pixel values.
     // If they do, return true.
     if (get_height() == other.get_height() && get_width() == other.get_width())
@@ -143,7 +137,6 @@ GrayscaleImage GrayscaleImage::operator+(const GrayscaleImage &other) const
     // Create a new image for the result
     GrayscaleImage result(width, height);
 
-    // TODO: Your code goes here.
     // Add two images' pixel values and return a new image, clamping the results.
     for (int i = 0; i < height; i++)
     {
@@ -168,7 +161,6 @@ GrayscaleImage GrayscaleImage::operator-(const GrayscaleImage &other) const
     // Create a new image for the result
     GrayscaleImage result(width, height);
 
-    // TODO: Your code goes here.
     // Subtract pixel values of two images and return a new image, clamping the results.
     for (int i = 0; i < height; i++)
     {
